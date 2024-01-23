@@ -38,11 +38,33 @@ sleep(3)
 profile_button = driver.find_element(By.XPATH, value='//*[@id="appMountPoint"]/div/div/div[1]/div[1]/div[2]/div/div/ul/li[1]/div/a/div/div')
 profile_button.click()
 
-prev_heigh = driver.execute_script('return document.body.scrollHeight')
-
 while True:
-    driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')
+    prev_heigh = driver.execute_script('return document.body.scrollHeight')
+    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
     sleep(3)
     new_height = driver.execute_script('return document.body.scrollHeight')
+    print(prev_heigh)
+    print(new_height)
     if new_height == prev_heigh:
+        print('breaking')
         break
+
+
+
+# myNumber = 100
+# print(f'{myNumber} hola')
+
+row_number = 0
+item_number = 0
+
+while row_number <= 974:
+    if item_number == 5:
+        item_number = 0
+    title = driver.find_element(By.XPATH, value=f'//*[@id="title-card-{row_number}-{item_number}"]/div[1]/a/div/div/p')
+    print(title.text)
+    row_number += 1
+    item_number += 1
+
+# //*[@id="title-card-973-0"]/div[1]/a/div/div/p
+# //*[@id="title-card-973-3"]/div[1]/a/div/div/p
+# //*[@id="title-card-974-1"]/div[1]/a/div/div/p
