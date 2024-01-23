@@ -102,6 +102,26 @@ sleep(10)
 
 driver.get('https://www.disneyplus.com/en-gb/movies/9f7c38e5-41c3-47b4-b99e-b5b3d2eb95d4')
 
+sleep(10)
+
+while True:
+    prev_heigh = driver.execute_script('return document.body.scrollHeight')
+    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+    sleep(5)
+    new_height = driver.execute_script('return document.body.scrollHeight')
+    if new_height == prev_heigh:
+        print('breaking')
+        break
+
+movie_title = driver.find_element(By.XPATH, value='//*[@id="section_index"]/article/div[2]/div/div/div/div/div[2]/a/div')
+print(movie_title.get_attribute('alt'))
+
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[2]/a/div
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[11]/a/div
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[1]/a/div
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[90]/a/div
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[960]/a/div
+
 # # //*[@id="title-card-973-0"]/div[1]/a/div/div/p
 # # //*[@id="title-card-973-3"]/div[1]/a/div/div/p
 # # //*[@id="title-card-974-1"]/div[1]/a/div/div/p
