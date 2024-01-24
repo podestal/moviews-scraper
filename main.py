@@ -75,7 +75,7 @@ driver.maximize_window()
 username = 'l.r.p.2991@gmail.com'
 password = '13anguloX'
 
-sleep(3)
+sleep(10)
 
 email = driver.find_element(By.ID, value='email')
 email.send_keys(username)
@@ -83,12 +83,12 @@ email.send_keys(username)
 continue_button = driver.find_element(By.XPATH, value='//*[@id="content"]/div/div/div/div/div[2]/div/form/button')
 continue_button.click()
 
-sleep(3)
+sleep(10)
 
 password_input = driver.find_element(By.XPATH, value='//*[@id="password"]')
 password_input.send_keys(password)
 
-sleep(3)
+sleep(10)
 
 login_button = driver.find_element(By.XPATH, value='//*[@id="content"]/div/div/div/div/div[2]/div/form/button')
 login_button.click()
@@ -98,32 +98,43 @@ sleep(20)
 profile_button = driver.find_element(By.XPATH, value='//*[@id="remove-main-padding_index"]/div/div/section/ul/div[1]/div/div')
 profile_button.click()
 
-sleep(10)
+sleep(20)
 
 driver.get('https://www.disneyplus.com/en-gb/movies/9f7c38e5-41c3-47b4-b99e-b5b3d2eb95d4')
 
-sleep(10)
+sleep(20)
 
-while True:
-    prev_heigh = driver.execute_script('return document.body.scrollHeight')
-    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-    sleep(5)
-    new_height = driver.execute_script('return document.body.scrollHeight')
-    if new_height == prev_heigh:
-        print('breaking')
-        break
+# while True:
+#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
+#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+#     sleep(5)
+#     new_height = driver.execute_script('return document.body.scrollHeight')
+#     if new_height == prev_heigh:
+#         print('breaking')
+#         break
 
-movie_title = driver.find_element(By.XPATH, value='//*[@id="section_index"]/article/div[2]/div/div/div/div/div[2]/a/div')
-print(movie_title.get_attribute('alt'))
+title_container = driver.find_element(By.XPATH, value='//*[@id="section_index"]/article/div[2]/div/div/div/div')
+# movie_title = driver.find_element(By.XPATH, value='//*[@id="section_index"]/article/div[2]/div/div/div/div/div[2]/a/div')
+# print(movie_title.get_attribute('alt'))
+# print(len(title_container))
+print(title_container)
+print(title_container.size)
+print(title_container.childElementCount)
 
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[2]/a/div
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[11]/a/div
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[1]/a/div
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[90]/a/div
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[960]/a/div
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[986]/a/div
 
 # # //*[@id="title-card-973-0"]/div[1]/a/div/div/p
 # # //*[@id="title-card-973-3"]/div[1]/a/div/div/p
 # # //*[@id="title-card-974-1"]/div[1]/a/div/div/p
 
 print(movies) 
+
+# save netflix into cvs
+# save disney into cvs
+# get all the data from those cvs and storage them into a dict
+# save the dict into a mysql
