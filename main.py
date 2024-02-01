@@ -95,31 +95,49 @@ login_button.click()
 
 sleep(20)
 
-profile_button = driver.find_element(By.XPATH, value='//*[@id="remove-main-padding_index"]/div/div/section/ul/div[1]/div/div')
-profile_button.click()
+# profile_button = driver.find_element(By.XPATH, value='//*[@id="remove-main-padding_index"]/div/div/section/ul/div[1]/div/div')
+# profile_button.click()
 
-sleep(20)
+# sleep(20)
 
 driver.get('https://www.disneyplus.com/en-gb/movies/9f7c38e5-41c3-47b4-b99e-b5b3d2eb95d4')
 
 sleep(20)
 
-# while True:
-#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
-#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-#     sleep(5)
-#     new_height = driver.execute_script('return document.body.scrollHeight')
-#     if new_height == prev_heigh:
-#         print('breaking')
-#         break
+while True:
+    prev_heigh = driver.execute_script('return document.body.scrollHeight')
+    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+    sleep(5)
+    new_height = driver.execute_script('return document.body.scrollHeight')
+    if new_height == prev_heigh:
+        print('breaking')
+        break
 
-title_container = driver.find_element(By.XPATH, value='//*[@id="section_index"]/article/div[2]/div/div/div/div')
+# title_container = driver.find_element(By.XPATH, value='//*[@id="section_index"]/article/div[2]/div/div/div/div')
+all_titles = driver.find_elements(By.XPATH, value='//*[@id="section_index"]/article/div[2]/div/div/div/div/div')
 # movie_title = driver.find_element(By.XPATH, value='//*[@id="section_index"]/article/div[2]/div/div/div/div/div[2]/a/div')
 # print(movie_title.get_attribute('alt'))
 # print(len(title_container))
-print(title_container)
-print(title_container.size)
-print(title_container.childElementCount)
+# print(title_container)
+# print(title_container.size)
+# print(title_container.childElementCount)
+
+item_number = 1
+total_titles = len(all_titles)
+
+while item_number <= total_titles:
+    title = driver.find_element(By.XPATH, value=f'//*[@id="section_index"]/article/div[2]/div/div/div/div/div[{item_number}]/a/div')
+    # if item_number == 6:
+    #     item_number = 0
+    #     row_number += 1
+    # if row_number == 648:
+    #     break
+    # title = driver.find_element(By.XPATH, value=f'//*[@id="section_index"]/article/div[2]/div/div/div/div/div[{len()}]/a/div')
+    movies[title.get_attribute('alt')] = 'disney'
+    item_number += 1
+    # print(row_number)
+    # print(item_number)
+    # item_number += 1
 
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[2]/a/div
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[11]/a/div
@@ -127,10 +145,15 @@ print(title_container.childElementCount)
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[90]/a/div
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[960]/a/div
 # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[986]/a/div
+    # //*[@id="section_index"]/article/div[2]/div/div/div/div/div[1]/a
 
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[30]
 # # //*[@id="title-card-973-0"]/div[1]/a/div/div/p
 # # //*[@id="title-card-973-3"]/div[1]/a/div/div/p
 # # //*[@id="title-card-974-1"]/div[1]/a/div/div/p
+
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[1]
+# //*[@id="section_index"]/article/div[2]/div/div/div/div/div[8]
 
 print(movies) 
 
