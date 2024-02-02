@@ -128,15 +128,15 @@ DISNEY_URL = 'https://www.disneyplus.com/identity/login/enter-email'
 
 # paramount
 
-PARAMOUNT_URL = 'https://www.paramountplus.com/movies/'
-
-# Credentials scraping
+# PARAMOUNT_URL = 'https://www.paramountplus.com/movies/'
 
 # USERNAME = 'cuentastreaming29010@gmail.com'
 # PASSWORD = 'zavastech100290'
 
-driver.get(PARAMOUNT_URL)
-driver.maximize_window()
+# driver.get(PARAMOUNT_URL)
+# driver.maximize_window()
+
+# Credentials scraping
 
 # username_input = driver.find_element(By.XPATH, value='//*[@id="email"]')
 # username_input.send_keys(USERNAME)
@@ -154,6 +154,30 @@ driver.maximize_window()
 # profile = driver.find_element(By.XPATH, value='//*[@id="who-s-watching"]/ul/li[5]/div[1]/div')
 # profile.click()
 
+# while True:
+#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
+#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+#     sleep(5)
+#     new_height = driver.execute_script('return document.body.scrollHeight')
+#     if new_height == prev_heigh:
+#         print('breaking')
+#         break
+
+# item_number = 1
+# all_titles = driver.find_elements(By.XPATH, value='//*[@id="main-container"]/section[1]/div/article')
+
+# while item_number <= len(all_titles):
+#     title = driver.find_element(By.XPATH, value=f'//*[@id="main-container"]/section[1]/div/article[{item_number}]/a/div/img')
+#     movies[title.get_attribute('alt')] = 'paramount'
+#     item_number += 1
+
+PRIME_URL = 'https://www.justwatch.com/pe/proveedor/amazon-prime-video?monetization_types=flatrate'
+
+driver.get(PRIME_URL)
+driver.maximize_window()
+
+sleep(5)
+
 while True:
     prev_heigh = driver.execute_script('return document.body.scrollHeight')
     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
@@ -164,14 +188,25 @@ while True:
         break
 
 item_number = 1
-all_titles = driver.find_elements(By.XPATH, value='//*[@id="main-container"]/section[1]/div/article')
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
-while item_number <= len(all_titles):
-    title = driver.find_element(By.XPATH, value=f'//*[@id="main-container"]/section[1]/div/article[{item_number}]/a/div/img')
-    movies[title.get_attribute('alt')] = 'paramount'
+while item_number < len(all_titles):
+    try:
+        title = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/span/div/picture/img')
+        movies[title.get_attribute('alt')] = 'prime'
+    except:
+        print('error')
     item_number += 1
+    
+    # movies[title.get_attribute('alt')] = 'prime'
+# //*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[181]/a/span/div/picture/img
+# //*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[2]/a/span/div/picture/img
+# //*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[2]/a/span/div/picture/img
+# //*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[3]/a/span/div/picture/img
+# //*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[13]/a/span/div/picture/img
+# //*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[73]/a/span/div/picture/img
 
-# //*[@id="main-container"]/section[1]/div/article[1]
+# total 100
 
 print(movies) 
 
