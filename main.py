@@ -207,46 +207,20 @@ DISNEY_URL = 'https://www.disneyplus.com/identity/login/enter-email'
 # total 100
 
 JUSTWATCH_URL = 'https://www.justwatch.com/pe'
-NETFLIX_URL = 'https://www.justwatch.com/pe/proveedor/netflix?monetization_types=flatrate'
-DISNEY_URL = 'https://www.justwatch.com/pe/proveedor/disney-plus?monetization_types=flatrate'
+NETFLIX_URL = 'https://www.justwatch.com/pe/proveedor/netflix?monetization_types=flatrate&sort_by=title'
+DISNEY_URL = 'https://www.justwatch.com/pe/proveedor/disney-plus?monetization_types=flatrate&sort_by=title'
+PRIME_URL = 'https://www.justwatch.com/pe/proveedor/amazon-prime-video?monetization_types=flatrate&sort_by=title'
+PARAMOUNT = 'https://www.justwatch.com/pe/proveedor/paramount-plus?monetization_types=flatrate&sort_by=title'
+HBO_URL = 'https://www.justwatch.com/pe/proveedor/hbo-max?monetization_types=flatrate&sort_by=title'
 
 driver.get(JUSTWATCH_URL)
 driver.maximize_window()
 
-# USERNAME = 'l.r.p.2991@gmail.com'
-# PASSWORD = '13anguloX'
 
 login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
 login.click()
 
 sleep(3)
-
-# login_modal = driver.find_element(By.XPATH,value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[1]/button[1]')
-# login_modal.click()
-
-# sleep(3)
-
-# email_password_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div/div/div[1]/form/ul/li[4]/button')
-# email_password_button.click()
-
-# sleep(3)
-
-# email_input = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div/div/form/div[2]/div/div[1]/input')
-# email_input.send_keys(USERNAME)
-
-# sleep(3)
-# next_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div/div/form/div[3]/div/button[2]')
-# next_button.click()
-
-# sleep(3)
-
-# password_input = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div/div/form/div[2]/div[3]/input')
-# password_input.send_keys(PASSWORD)
-
-# sleep(3)
-
-# submit_button = driver.find_element(By.XPATH, value='//*[@id="firebaseui-auth-container"]/div/form/div[3]/div[2]/button')
-# submit_button.click()
 
 langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
 langauge_button.click()
@@ -271,8 +245,8 @@ all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div
 
 while item_number < len(all_titles):
     try:
-        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
-        title = title_element.get_attribute('href').split('/')[-1]
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
         if movies.get(title):
             movies[title].append('netflix')
             print('title exist')
@@ -282,16 +256,10 @@ while item_number < len(all_titles):
     except:
         print('error')
     item_number += 1
-
-
-# //*[@id="firebaseui-auth-container"]/div/div[1]/form/ul/li[4]/button/span[2]
-# //*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span
-
-# print(movies) 
     
 sleep(5)
 
-driver.get('https://www.justwatch.com/pe?monetization_types=flatrate&providers=dnp,nfx,prv')
+driver.get(DISNEY_URL)
 
 sleep(5)
 
@@ -300,8 +268,8 @@ all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div
 
 while item_number < len(all_titles):
     try:
-        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
-        title = title_element.get_attribute('href').split('/')[-1]
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
         if movies.get(title):
             movies[title].append('disney')
             print('title exist')
@@ -312,36 +280,78 @@ while item_number < len(all_titles):
         print('error')
     item_number += 1
 
-# item_number = 1
-# all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+sleep(5)
+
+driver.get(PRIME_URL)
+
+sleep(5)
+
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
+        if movies.get(title):
+            movies[title].append('prime')
+            print('title exist')
+        else:
+            movies[title] = ['prime']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
+
+sleep(5)
+
+driver.get(PARAMOUNT)
+
+sleep(5)
+
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
+        if movies.get(title):
+            movies[title].append('paramount')
+            print('title exist')
+        else:
+            movies[title] = ['paramount']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
+
+sleep(5)
+
+driver.get(HBO_URL)
+
+sleep(5)
+
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
+        if movies.get(title):
+            movies[title].append('hbo')
+            print('title exist')
+        else:
+            movies[title] = ['hbo']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
 
 
-# while item_number < len(all_titles):
-#     try:
-#         title = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/span/div/picture/img')
-#         movie = {'original_title': title.get_attribute('alt'), 'streaming_platforms': []}
-#         movie['streaming_platforms'].append('netflix')
-#         movies.append(movie)
 
-#     except:
-#         print('error')
-#     item_number += 1
-
-# new_movie = {'original_title': 'My fKN mOVIE', 'streaming_platforms': streaming_platforms}
-# print('New Movie', new_movie)
-# [movie['streaming_platforms'].append('disney') if movie['original_title'].lower() == 'The laast one'.lower() else movies.append(new_movie) for movie in movies]
-# for movie in movies:
-#     if new_movie == movie:
-#         movie['streaming_platforms'].append('disney')
-#     else:
-#         new_movie['streaming_platforms'] = ['disney']
-#         movies.append(new_movie)
-
-# if new_movie in movies:
-#     movies.
-# else:
-#     new_movie['streaming_platforms'] = ['disney']
-#     movies.append(new_movie)
-
-print(movies)
+for movie in movies:
+    print(movie)
+    
 
