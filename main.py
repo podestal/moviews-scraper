@@ -171,32 +171,32 @@ DISNEY_URL = 'https://www.disneyplus.com/identity/login/enter-email'
 #     movies[title.get_attribute('alt')] = 'paramount'
 #     item_number += 1
 
-PRIME_URL = 'https://www.justwatch.com/pe/proveedor/amazon-prime-video?monetization_types=flatrate'
+# PRIME_URL = 'https://www.justwatch.com/pe/proveedor/amazon-prime-video?monetization_types=flatrate'
 
-driver.get(PRIME_URL)
-driver.maximize_window()
+# driver.get(PRIME_URL)
+# driver.maximize_window()
 
-sleep(5)
+# sleep(5)
 
-while True:
-    prev_heigh = driver.execute_script('return document.body.scrollHeight')
-    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-    sleep(5)
-    new_height = driver.execute_script('return document.body.scrollHeight')
-    if new_height == prev_heigh:
-        print('breaking')
-        break
+# while True:
+#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
+#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+#     sleep(5)
+#     new_height = driver.execute_script('return document.body.scrollHeight')
+#     if new_height == prev_heigh:
+#         print('breaking')
+#         break
 
-item_number = 1
-all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+# item_number = 1
+# all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
-while item_number < len(all_titles):
-    try:
-        title = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/span/div/picture/img')
-        movies[title.get_attribute('alt')] = 'prime'
-    except:
-        print('error')
-    item_number += 1
+# while item_number < len(all_titles):
+#     try:
+#         title = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/span/div/picture/img')
+#         movies[title.get_attribute('alt')] = 'prime'
+#     except:
+#         print('error')
+#     item_number += 1
     
     # movies[title.get_attribute('alt')] = 'prime'
 # //*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[181]/a/span/div/picture/img
@@ -207,6 +207,63 @@ while item_number < len(all_titles):
 # //*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[73]/a/span/div/picture/img
 
 # total 100
+
+JUSTWATCH_URL = 'https://www.justwatch.com/pe'
+
+driver.get(JUSTWATCH_URL)
+driver.maximize_window()
+
+# USERNAME = 'l.r.p.2991@gmail.com'
+# PASSWORD = '13anguloX'
+
+login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
+login.click()
+
+sleep(3)
+
+# login_modal = driver.find_element(By.XPATH,value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[1]/button[1]')
+# login_modal.click()
+
+# sleep(3)
+
+# email_password_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div/div/div[1]/form/ul/li[4]/button')
+# email_password_button.click()
+
+# sleep(3)
+
+# email_input = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div/div/form/div[2]/div/div[1]/input')
+# email_input.send_keys(USERNAME)
+
+# sleep(3)
+# next_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div/div/form/div[3]/div/button[2]')
+# next_button.click()
+
+# sleep(3)
+
+# password_input = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div/div/form/div[2]/div[3]/input')
+# password_input.send_keys(PASSWORD)
+
+# sleep(3)
+
+# submit_button = driver.find_element(By.XPATH, value='//*[@id="firebaseui-auth-container"]/div/form/div[3]/div[2]/button')
+# submit_button.click()
+
+langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
+langauge_button.click()
+
+sleep(5)
+
+english_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[12]')
+driver.execute_script("arguments[0].click();", english_button)
+
+sleep(5)
+
+close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
+close_button.click()
+
+
+# //*[@id="firebaseui-auth-container"]/div/div[1]/form/ul/li[4]/button/span[2]
+# //*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span
 
 print(movies) 
 
