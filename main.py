@@ -11,8 +11,6 @@ import pandas as pd
 NETFLIX_USERNAME = 'magnus3@VoltVex.com'
 NETFLIX_PASSWORD = 'p433837'
 
-movies = {}
-
 URL = 'https://www.netflix.com/browse/genre/34399?so=az'
 chrome_options = ChromeOptions()
 driver = webdriver.Chrome(options=chrome_options.get_options())
@@ -209,6 +207,8 @@ DISNEY_URL = 'https://www.disneyplus.com/identity/login/enter-email'
 # total 100
 
 JUSTWATCH_URL = 'https://www.justwatch.com/pe'
+NETFLIX_URL = 'https://www.justwatch.com/pe/proveedor/netflix?monetization_types=flatrate'
+DISNEY_URL = 'https://www.justwatch.com/pe/proveedor/disney-plus?monetization_types=flatrate'
 
 driver.get(JUSTWATCH_URL)
 driver.maximize_window()
@@ -261,10 +261,87 @@ sleep(5)
 close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
 close_button.click()
 
+sleep(5)
+
+driver.get(NETFLIX_URL)
+movies = {}
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+
+
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+        title = title_element.get_attribute('href').split('/')[-1]
+        if movies.get(title):
+            movies[title].append('netflix')
+            print('title exist')
+        else:
+            movies[title] = ['netflix']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
+
 
 # //*[@id="firebaseui-auth-container"]/div/div[1]/form/ul/li[4]/button/span[2]
 # //*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span
 
-print(movies) 
+# print(movies) 
+    
+sleep(5)
 
+driver.get('https://www.justwatch.com/pe?monetization_types=flatrate&providers=dnp,nfx,prv')
+
+sleep(5)
+
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+        title = title_element.get_attribute('href').split('/')[-1]
+        if movies.get(title):
+            movies[title].append('disney')
+            print('title exist')
+        else:
+            movies[title] = ['disney']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
+
+# item_number = 1
+# all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+
+
+# while item_number < len(all_titles):
+#     try:
+#         title = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/span/div/picture/img')
+#         movie = {'original_title': title.get_attribute('alt'), 'streaming_platforms': []}
+#         movie['streaming_platforms'].append('netflix')
+#         movies.append(movie)
+
+#     except:
+#         print('error')
+#     item_number += 1
+
+# new_movie = {'original_title': 'My fKN mOVIE', 'streaming_platforms': streaming_platforms}
+# print('New Movie', new_movie)
+# [movie['streaming_platforms'].append('disney') if movie['original_title'].lower() == 'The laast one'.lower() else movies.append(new_movie) for movie in movies]
+# for movie in movies:
+#     if new_movie == movie:
+#         movie['streaming_platforms'].append('disney')
+#     else:
+#         new_movie['streaming_platforms'] = ['disney']
+#         movies.append(new_movie)
+
+# if new_movie in movies:
+#     movies.
+# else:
+#     new_movie['streaming_platforms'] = ['disney']
+#     movies.append(new_movie)
+
+print(movies)
 
