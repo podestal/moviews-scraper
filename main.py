@@ -242,14 +242,14 @@ movies = {}
 item_number = 1
 all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
-# while True:
-#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
-#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-#     sleep(5)
-#     new_height = driver.execute_script('return document.body.scrollHeight')
-#     if new_height == prev_heigh:
-#         print('breaking')
-#         break
+while True:
+    prev_heigh = driver.execute_script('return document.body.scrollHeight')
+    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+    sleep(5)
+    new_height = driver.execute_script('return document.body.scrollHeight')
+    if new_height == prev_heigh:
+        print('breaking')
+        break
 
 
 while item_number < len(all_titles):
@@ -266,133 +266,133 @@ while item_number < len(all_titles):
         print('error')
     item_number += 1
     
-# sleep(5)
+sleep(5)
 
-# driver.get(DISNEY_URL)
+driver.get(DISNEY_URL)
 
-# sleep(5)
+sleep(5)
 
-# while True:
-#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
-#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-#     sleep(5)
-#     new_height = driver.execute_script('return document.body.scrollHeight')
-#     if new_height == prev_heigh:
-#         print('breaking')
-#         break
+while True:
+    prev_heigh = driver.execute_script('return document.body.scrollHeight')
+    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+    sleep(5)
+    new_height = driver.execute_script('return document.body.scrollHeight')
+    if new_height == prev_heigh:
+        print('breaking')
+        break
 
-# item_number = 1
-# all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
-# while item_number < len(all_titles):
-#     try:
-#         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-#         title = title_element.get_attribute('alt')
-#         if movies.get(title):
-#             movies[title].append('disney')
-#             print('title exist')
-#         else:
-#             movies[title] = ['disney']
-#             print('title does not exist')
-#     except:
-#         print('error')
-#     item_number += 1
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
+        if movies.get(title):
+            movies[title].append('disney')
+            print('title exist')
+        else:
+            movies[title] = ['disney']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
 
-# sleep(5)
+sleep(5)
 
-# driver.get(PRIME_URL)
+driver.get(PRIME_URL)
 
-# sleep(5)
+sleep(5)
 
-# while True:
-#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
-#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-#     sleep(5)
-#     new_height = driver.execute_script('return document.body.scrollHeight')
-#     if new_height == prev_heigh:
-#         print('breaking')
-#         break
+while True:
+    prev_heigh = driver.execute_script('return document.body.scrollHeight')
+    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+    sleep(5)
+    new_height = driver.execute_script('return document.body.scrollHeight')
+    if new_height == prev_heigh:
+        print('breaking')
+        break
 
-# item_number = 1
-# all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
-# while item_number < len(all_titles):
-#     try:
-#         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-#         title = title_element.get_attribute('alt')
-#         if movies.get(title):
-#             movies[title].append('prime')
-#             print('title exist')
-#         else:
-#             movies[title] = ['prime']
-#             print('title does not exist')
-#     except:
-#         print('error')
-#     item_number += 1
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
+        if movies.get(title):
+            movies[title].append('prime')
+            print('title exist')
+        else:
+            movies[title] = ['prime']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
 
-# sleep(5)
+sleep(5)
 
-# driver.get(PARAMOUNT)
+driver.get(PARAMOUNT)
 
-# sleep(5)
+sleep(5)
 
-# while True:
-#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
-#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-#     sleep(5)
-#     new_height = driver.execute_script('return document.body.scrollHeight')
-#     if new_height == prev_heigh:
-#         print('breaking')
-#         break
+while True:
+    prev_heigh = driver.execute_script('return document.body.scrollHeight')
+    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+    sleep(5)
+    new_height = driver.execute_script('return document.body.scrollHeight')
+    if new_height == prev_heigh:
+        print('breaking')
+        break
 
-# item_number = 1
-# all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
-# while item_number < len(all_titles):
-#     try:
-#         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-#         title = title_element.get_attribute('alt')
-#         if movies.get(title):
-#             movies[title].append('paramount')
-#             print('title exist')
-#         else:
-#             movies[title] = ['paramount']
-#             print('title does not exist')
-#     except:
-#         print('error')
-#     item_number += 1
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
+        if movies.get(title):
+            movies[title].append('paramount')
+            print('title exist')
+        else:
+            movies[title] = ['paramount']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
 
-# sleep(5)
+sleep(5)
 
-# driver.get(HBO_URL)
+driver.get(HBO_URL)
 
-# sleep(5)
+sleep(5)
 
-# while True:
-#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
-#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-#     sleep(5)
-#     new_height = driver.execute_script('return document.body.scrollHeight')
-#     if new_height == prev_heigh:
-#         print('breaking')
-#         break
+while True:
+    prev_heigh = driver.execute_script('return document.body.scrollHeight')
+    driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+    sleep(5)
+    new_height = driver.execute_script('return document.body.scrollHeight')
+    if new_height == prev_heigh:
+        print('breaking')
+        break
 
-# item_number = 1
-# all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
-# while item_number < len(all_titles):
-#     try:
-#         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-#         title = title_element.get_attribute('alt')
-#         if movies.get(title):
-#             movies[title].append('hbo')
-#             print('title exist')
-#         else:
-#             movies[title] = ['hbo']
-#             print('title does not exist')
-#     except:
-#         print('error')
-#     item_number += 1
+while item_number < len(all_titles):
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        title = title_element.get_attribute('alt')
+        if movies.get(title):
+            movies[title].append('hbo')
+            print('title exist')
+        else:
+            movies[title] = ['hbo']
+            print('title does not exist')
+    except:
+        print('error')
+    item_number += 1
 
 original_title = []
 streaming_platforms = []
