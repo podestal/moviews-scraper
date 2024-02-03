@@ -74,9 +74,9 @@ spanish_titles = []
 while item_number <= len(all_titles):
     try:
         original_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-        original_title = original_title_element.get_attribute('alt')
+        original_title = normalize_string(original_title_element.get_attribute('alt'))
         title_element= driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
-        title = title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
+        title = normalize_string(title_element.get_attribute('href').split('/')[-1].replace('-', ' '))
         if movies.get(title):
             movies[title]['streaming'].append('netflix')
         else:
@@ -122,14 +122,14 @@ while item_number < len(all_titles):
     
     try:
         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-        spanish_title_one = title_element.get_attribute('data-src').split('/')[-1].replace('-', ' ')
-        spanish_title_two = title_element.get_attribute('alt')
+        spanish_title_one = normalize_string(title_element.get_attribute('data-src').split('/')[-1].replace('-', ' '))
+        spanish_title_two = normalize_string(title_element.get_attribute('alt'))
         if movies.get(spanish_title_one):
-            movies[spanish_title_one]['spanish_title_one'] = normalize_string(spanish_title_one)
-            movies[spanish_title_one]['spanish_title_two'] = normalize_string(spanish_title_two)
+            movies[spanish_title_one]['spanish_title_one'] = spanish_title_one
+            movies[spanish_title_one]['spanish_title_two'] = spanish_title_two
         elif movies.get(spanish_title_two):
-            movies[spanish_title_two]['spanish_title_one'] = normalize_string(spanish_title_one)
-            movies[spanish_title_two]['spanish_title_two'] = normalize_string(spanish_title_two)
+            movies[spanish_title_two]['spanish_title_one'] = spanish_title_one
+            movies[spanish_title_two]['spanish_title_two'] = spanish_title_two
     except:
         print('error')
     item_number += 1
@@ -308,13 +308,18 @@ while item_number < len(all_titles):
 # title_four = []
 # streaming = []
 
-# for key in movies:
-#     original_title.append(movies[key]['original_title'])
-#     title_two.append(key)
-#     title_three.append(movies[key]['spanish_title_one'])
-#     title_four.append(movies[key]['spanish_title_two'])
-#     streaming.append(movies[key]['streaming'])
+data = []
+
+for key in movies:
+
+    data.append({
+        'original_title': movies[key]['original_title'],
+        'title_two': key,
+        'title_three': movies[key]['spanish_title_one'],
+        'title_four': movies[key]['spanish_title_two'],
+        'streaming': movies[key]['streaming']
+    })
 
 with open("sample.json", "w") as file:
-    json.dump(movies, file, indent=4)
+    json.dump(data, file, indent=4)
 
