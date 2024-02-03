@@ -11,15 +11,8 @@ import json
 import re
 from unicodedata import normalize
 
-def normalize_string(s):
-    s = re.sub(
-            r"([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+", r"\1", 
-            normalize( "NFD", s), 0, re.I
-        )
-    s = normalize( 'NFC', s)
-    return s
-
-
+spanish_titles = []
+movies = {}
 chrome_options = ChromeOptions()
 driver = webdriver.Chrome(options=chrome_options.get_options())
 
@@ -32,6 +25,54 @@ HBO_URL = 'https://www.justwatch.com/pe/proveedor/hbo-max?monetization_types=fla
 
 driver.get(JUSTWATCH_URL)
 driver.maximize_window()
+
+def normalize_string(s):
+    s = re.sub(
+            r"([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+", r"\1", 
+            normalize( "NFD", s), 0, re.I
+        )
+    s = normalize( 'NFC', s)
+    return s
+
+def get_english_titles(driver):
+
+    all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+    item_number = 1
+
+    while item_number <= len(all_titles):
+        try:
+            original_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+            original_title = normalize_string(original_title_element.get_attribute('alt'))
+            title_element= driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+            title = normalize_string(title_element.get_attribute('href').split('/')[-1].replace('-', ' '))
+            if movies.get(title):
+                movies[title]['streaming'].append('netflix')
+            else:
+                print(f'Adding {title} and {original_title}')
+                movies[title] = {'streaming': ['netflix'], 'original_title': original_title, 'spanish_title_one': '#', 'spanish_title_two': '#'}
+        except:
+            print('error')
+        item_number += 1
+
+def get_spanish_titles(driver):
+    item_number = 1
+    all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
+
+    while item_number < len(all_titles):
+        
+        try:
+            title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+            spanish_title_one = normalize_string(title_element.get_attribute('data-src').split('/')[-1].replace('-', ' '))
+            spanish_title_two = normalize_string(title_element.get_attribute('alt'))
+            if movies.get(spanish_title_one):
+                movies[spanish_title_one]['spanish_title_one'] = spanish_title_one
+                movies[spanish_title_one]['spanish_title_two'] = spanish_title_two
+            elif movies.get(spanish_title_two):
+                movies[spanish_title_two]['spanish_title_one'] = spanish_title_one
+                movies[spanish_title_two]['spanish_title_two'] = spanish_title_two
+        except:
+            print('error')
+        item_number += 1
 
 
 login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
@@ -55,9 +96,8 @@ close_button.click()
 sleep(5)
 
 driver.get(NETFLIX_URL)
-movies = {}
-spanish_movies = {}
-item_number = 1
+
+sleep(5)
 
 # while True:
 #     prev_heigh = driver.execute_script('return document.body.scrollHeight')
@@ -68,23 +108,7 @@ item_number = 1
 #         print('breaking')
 #         break
 
-all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
-spanish_titles = []
-
-while item_number <= len(all_titles):
-    try:
-        original_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-        original_title = normalize_string(original_title_element.get_attribute('alt'))
-        title_element= driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
-        title = normalize_string(title_element.get_attribute('href').split('/')[-1].replace('-', ' '))
-        if movies.get(title):
-            movies[title]['streaming'].append('netflix')
-        else:
-            print(f'Adding {title} and {original_title}')
-            movies[title] = {'streaming': ['netflix'], 'original_title': original_title, 'spanish_title_one': '#', 'spanish_title_two': '#'}
-    except:
-        print('error')
-    item_number += 1
+get_english_titles(driver)
 
 login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
 login.click()
@@ -106,6 +130,8 @@ close_button.click()
     
 sleep(5)
 
+get_spanish_titles(driver)
+
 # while True:
 #     prev_heigh = driver.execute_script('return document.body.scrollHeight')
 #     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
@@ -115,24 +141,7 @@ sleep(5)
 #         print('breaking')
 #         break
 
-item_number = 1
-all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
-while item_number < len(all_titles):
-    
-    try:
-        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-        spanish_title_one = normalize_string(title_element.get_attribute('data-src').split('/')[-1].replace('-', ' '))
-        spanish_title_two = normalize_string(title_element.get_attribute('alt'))
-        if movies.get(spanish_title_one):
-            movies[spanish_title_one]['spanish_title_one'] = spanish_title_one
-            movies[spanish_title_one]['spanish_title_two'] = spanish_title_two
-        elif movies.get(spanish_title_two):
-            movies[spanish_title_two]['spanish_title_one'] = spanish_title_one
-            movies[spanish_title_two]['spanish_title_two'] = spanish_title_two
-    except:
-        print('error')
-    item_number += 1
 
 # driver.get(DISNEY_URL)
 
