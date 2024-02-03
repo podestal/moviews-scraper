@@ -227,8 +227,8 @@ langauge_button.click()
 
 sleep(5)
 
-english_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[12]')
-driver.execute_script("arguments[0].click();", english_button)
+english_us_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[12]')
+driver.execute_script("arguments[0].click();", english_us_button)
 
 sleep(5)
 
@@ -254,23 +254,59 @@ all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div
 spanish_titles = []
 
 while item_number < len(all_titles):
+    
     try:
         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-        spanish_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
         title = title_element.get_attribute('alt')
-        spanish_title = spanish_title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
+        # spanish_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+        # spanish_title = spanish_title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
         if movies.get(title):
             movies[title].append('netflix')
             print('title exist')
         else:
             movies[title] = ['netflix']
-            spanish_titles.append(spanish_title)
+            # spanish_titles.append(spanish_title)
             print('title does not exist')
     except:
         print('error')
     item_number += 1
+
+login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
+login.click()
+
+sleep(3)
+
+langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
+langauge_button.click()
+
+sleep(5)
+
+spanish_latin_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[15]')
+driver.execute_script("arguments[0].click();", spanish_latin_button)
+
+sleep(5)
+
+close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
+close_button.click()
     
-# sleep(5)
+sleep(5)
+
+item_number = 1
+
+while item_number < len(all_titles):
+    
+    try:
+        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        spanish_title_one = title_element.get_attribute('data-src').split('/')[-1].replace('-', ' ')
+        spanish_title_two = title_element.get_attribute('alt')
+        if movies.get(title):
+            print('spanish title exist')
+        else:
+            spanish_titles.append(spanish_title_one, spanish_title_two)
+            print('adding spanish titles')
+    except:
+        print('error')
+    item_number += 1
 
 # driver.get(DISNEY_URL)
 
@@ -292,11 +328,14 @@ while item_number < len(all_titles):
 #     try:
 #         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
 #         title = title_element.get_attribute('alt')
+#         spanish_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+#         spanish_title = spanish_title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
 #         if movies.get(title):
 #             movies[title].append('disney')
 #             print('title exist')
 #         else:
 #             movies[title] = ['disney']
+#             spanish_titles.append(spanish_title)
 #             print('title does not exist')
 #     except:
 #         print('error')
@@ -324,11 +363,14 @@ while item_number < len(all_titles):
 #     try:
 #         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
 #         title = title_element.get_attribute('alt')
+#         spanish_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+#         spanish_title = spanish_title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
 #         if movies.get(title):
 #             movies[title].append('prime')
 #             print('title exist')
 #         else:
 #             movies[title] = ['prime']
+#             spanish_titles.append(spanish_title)
 #             print('title does not exist')
 #     except:
 #         print('error')
@@ -356,11 +398,14 @@ while item_number < len(all_titles):
 #     try:
 #         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
 #         title = title_element.get_attribute('alt')
+#         spanish_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+#         spanish_title = spanish_title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
 #         if movies.get(title):
 #             movies[title].append('paramount')
 #             print('title exist')
 #         else:
 #             movies[title] = ['paramount']
+#             spanish_titles.append(spanish_title)
 #             print('title does not exist')
 #     except:
 #         print('error')
@@ -388,11 +433,14 @@ while item_number < len(all_titles):
 #     try:
 #         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
 #         title = title_element.get_attribute('alt')
+#         spanish_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+#         spanish_title = spanish_title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
 #         if movies.get(title):
 #             movies[title].append('hbo')
 #             print('title exist')
 #         else:
 #             movies[title] = ['hbo']
+#             spanish_titles.append(spanish_title)
 #             print('title does not exist')
 #     except:
 #         print('error')
