@@ -7,6 +7,8 @@ from selenium import webdriver
 from chrome_options import ChromeOptions
 from time import sleep
 import pandas as pd
+import json
+
 
 NETFLIX_USERNAME = 'magnus3@VoltVex.com'
 NETFLIX_PASSWORD = 'p433837'
@@ -239,8 +241,8 @@ sleep(5)
 
 driver.get(NETFLIX_URL)
 movies = {}
+spanish_movies = {}
 item_number = 1
-all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
 # while True:
 #     prev_heigh = driver.execute_script('return document.body.scrollHeight')
@@ -251,22 +253,20 @@ all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div
 #         print('breaking')
 #         break
 
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 spanish_titles = []
 
-while item_number < len(all_titles):
-    
+while item_number <= len(all_titles):
     try:
-        title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
-        title = title_element.get_attribute('alt')
-        # spanish_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
-        # spanish_title = spanish_title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
+        original_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
+        original_title = original_title_element.get_attribute('alt')
+        title_element= driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
+        title = title_element.get_attribute('href').split('/')[-1].replace('-', ' ')
         if movies.get(title):
-            movies[title].append('netflix')
-            print('title exist')
+            movies[title]['streaming'].append('netflix')
         else:
-            movies[title] = ['netflix']
-            # spanish_titles.append(spanish_title)
-            print('title does not exist')
+            print(f'Adding {title} and {original_title}')
+            movies[title] = {'streaming': ['netflix'], 'original_title': original_title, 'spanish_title_one': '#', 'spanish_title_two': '#'}
     except:
         print('error')
     item_number += 1
@@ -274,7 +274,7 @@ while item_number < len(all_titles):
 login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
 login.click()
 
-sleep(3)
+sleep(5)
 
 langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
 langauge_button.click()
@@ -291,7 +291,17 @@ close_button.click()
     
 sleep(5)
 
+# while True:
+#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
+#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+#     sleep(5)
+#     new_height = driver.execute_script('return document.body.scrollHeight')
+#     if new_height == prev_heigh:
+#         print('breaking')
+#         break
+
 item_number = 1
+all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
 
 while item_number < len(all_titles):
     
@@ -299,11 +309,19 @@ while item_number < len(all_titles):
         title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
         spanish_title_one = title_element.get_attribute('data-src').split('/')[-1].replace('-', ' ')
         spanish_title_two = title_element.get_attribute('alt')
-        if movies.get(title):
-            print('spanish title exist')
-        else:
-            spanish_titles.append(spanish_title_one, spanish_title_two)
-            print('adding spanish titles')
+
+        # if spanish_movies.get(spanish_title_one):
+        #     print('spanish title exist')
+        # else:
+        #     spanish_movies[spanish_title_one] = spanish_title_two
+        #     spanish_titles.append(f'{spanish_title_one}, {spanish_title_two}')
+        #     print('spanish title does not exist')
+        if movies.get(spanish_title_one):
+            movies[spanish_title_one]['spanish_title_one'] = spanish_title_one
+            movies[spanish_title_one]['spanish_title_two'] = spanish_title_two
+        elif movies.get(spanish_title_two):
+            movies[spanish_title_two]['spanish_title_one'] = spanish_title_one
+            movies[spanish_title_two]['spanish_title_two'] = spanish_title_two
     except:
         print('error')
     item_number += 1
@@ -446,19 +464,46 @@ while item_number < len(all_titles):
 #         print('error')
 #     item_number += 1
 
+# original_title = []
+# streaming_platforms = []
+# latin_title = []
+
+# for key in movies:
+#     original_title.append(key)
+#     streaming_platforms.append(movies[key])
+
+# print('movies length', len(movies))
+# print('movies spanish length', len(spanish_movies))
+
+# df = pd.DataFrame({'original_title': original_title, 'streaming_platforms': streaming_platforms})
+# df.to_csv('movies_data.csv', index=False)
+# print('file created')
+
+# my_nested_dict = {}
+
+# title = 'title1'
+
+# my_nested_dict['title'] = {'streaming': ['netflix'], 'titles': ['title1', 'title2']}
+# print(my_nested_dict['title']['titles'])
+
+# if title in my_nested_dict['title']['titles']:
+#     print('is in')
+# else:
+#     print('is not')
+
+# my_nested_dict['title']['streaming'].append('disney')
+# print(my_nested_dict)
+    
 original_title = []
-streaming_platforms = []
+title_two = []
+title_three = []
+title_four = []
+streaming = []
 
 for key in movies:
-    print(key)
-    original_title.append(key)
-    print(movies[key])
-    streaming_platforms.append(movies[key])
-
-df = pd.DataFrame({'original_title': original_title, 'spanish_title':spanish_titles, 'streaming_platforms': streaming_platforms})
-df.to_csv('movies_data.csv', index=False)
-print(df)
-
-
-
+    original_title.append(movies[key]['original_title'])
+    title_two.append(key)
+    title_three.append(movies[key]['spanish_title_one'])
+    title_four.append(movies[key]['spanish_title_two'])
+    streaming.append(movies[key]['streaming'])
 
