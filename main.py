@@ -507,6 +507,5 @@ for key in movies:
     title_four.append(movies[key]['spanish_title_two'])
     streaming.append(movies[key]['streaming'])
 
-df = pd.DataFrame({'original_title': original_title, 'title_two': title_two, 'title_three': title_three, 'title_four': title_four, 'streaming': streaming})
-df.to_csv('movies_data.csv', index=False)
-print(df)
+with open("sample.json", "w") as file:
+    json.dump(movies, file, indent=4)
