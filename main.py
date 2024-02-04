@@ -74,61 +74,145 @@ def get_spanish_titles(driver):
             print('error')
         item_number += 1
 
+def set_english_language(driver):
+    login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
+    login.click()
 
-login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
-login.click()
+    sleep(3)
 
-sleep(3)
+    langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
+    langauge_button.click()
 
-langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
-langauge_button.click()
+    sleep(5)
 
-sleep(5)
+    english_us_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[12]')
+    driver.execute_script("arguments[0].click();", english_us_button)
 
-english_us_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[12]')
-driver.execute_script("arguments[0].click();", english_us_button)
+    sleep(5)
 
-sleep(5)
+    close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
+    close_button.click()
 
-close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
-close_button.click()
+    sleep(5)
 
-sleep(5)
+def set_spanish_language(driver):
+    login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
+    login.click()
+
+    sleep(5)
+
+    langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
+    langauge_button.click()
+
+    sleep(5)
+
+    spanish_latin_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[15]')
+    driver.execute_script("arguments[0].click();", spanish_latin_button)
+
+    sleep(5)
+
+    close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
+    close_button.click()
+        
+    sleep(5)
+
+
+def get_to_the_end(driver):
+    while True:
+        prev_heigh = driver.execute_script('return document.body.scrollHeight')
+        driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
+        sleep(5)
+        new_height = driver.execute_script('return document.body.scrollHeight')
+        if new_height == prev_heigh:
+            print('breaking')
+            break
+
+
+set_english_language(driver)
 
 driver.get(NETFLIX_URL)
 
 sleep(5)
 
-# while True:
-#     prev_heigh = driver.execute_script('return document.body.scrollHeight')
-#     driver.execute_script(f'window.scrollTo(0, document.body.scrollHeight)')
-#     sleep(5)
-#     new_height = driver.execute_script('return document.body.scrollHeight')
-#     if new_height == prev_heigh:
-#         print('breaking')
-#         break
+get_to_the_end(driver)
 
 get_english_titles(driver)
 
-login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
-login.click()
+set_spanish_language(driver)
+
+get_to_the_end(driver)
+
+get_spanish_titles(driver)
+
+# DISNEY
+
+set_english_language(driver)
+
+driver.get(DISNEY_URL)
 
 sleep(5)
 
-langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
-langauge_button.click()
+get_to_the_end(driver)
+
+get_english_titles(driver)
+
+set_spanish_language(driver)
+
+get_to_the_end(driver)
+
+get_spanish_titles(driver)
+
+# PRIME
+
+set_english_language(driver)
+
+driver.get(PRIME_URL)
 
 sleep(5)
 
-spanish_latin_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[15]')
-driver.execute_script("arguments[0].click();", spanish_latin_button)
+get_to_the_end(driver)
+
+get_english_titles(driver)
+
+set_spanish_language(driver)
+
+get_to_the_end(driver)
+
+get_spanish_titles(driver)
+
+# PARAMOUNT
+
+set_english_language(driver)
+
+driver.get(PARAMOUNT)
 
 sleep(5)
 
-close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
-close_button.click()
-    
+get_to_the_end(driver)
+
+get_english_titles(driver)
+
+set_spanish_language(driver)
+
+get_to_the_end(driver)
+
+get_spanish_titles(driver)
+
+# HBO
+
+set_english_language(driver)
+
+driver.get(HBO_URL)
+
 sleep(5)
+
+get_to_the_end(driver)
+
+get_english_titles(driver)
+
+set_spanish_language(driver)
+
+get_to_the_end(driver)
 
 get_spanish_titles(driver)
 
