@@ -45,13 +45,15 @@ def get_english_titles(driver, streaming):
         try:
             original_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
             original_title = normalize_string(original_title_element.get_attribute('alt'))
+            poster = original_title_element.get_attribute('src')
+            print('poster', poster)
             title_element= driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
             title = normalize_string(title_element.get_attribute('href').split('/')[-1].replace('-', ' '))
             if movies.get(title):
                 movies[title]['streaming'].append(streaming)
             else:
                 print(f'Adding {title} and {original_title}')
-                movies[title] = {'streaming': [streaming], 'original_title': original_title, 'spanish_title_one': '#', 'spanish_title_two': '#'}
+                movies[title] = {'streaming': [streaming], 'original_title': original_title, 'spanish_title_one': '#', 'spanish_title_two': '#', 'poster': poster}
         except:
             print('error')
         item_number += 1
@@ -139,95 +141,95 @@ driver.get(NETFLIX_URL)
 
 sleep(5)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
 get_english_titles(driver, 'Netflix')
 
-set_spanish_language(driver)
+# set_spanish_language(driver)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_spanish_titles(driver)
+# get_spanish_titles(driver)
 
 # DISNEY
 
-print('Disney+')
+# print('Disney+')
 
-set_english_language(driver)
+# set_english_language(driver)
 
-driver.get(DISNEY_URL)
+# driver.get(DISNEY_URL)
 
-sleep(5)
+# sleep(5)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_english_titles(driver, 'Disney+')
+# get_english_titles(driver, 'Disney+')
 
-set_spanish_language(driver)
+# set_spanish_language(driver)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_spanish_titles(driver)
+# get_spanish_titles(driver)
 
 # PRIME
 
-print('Amazon Prime')
+# print('Amazon Prime')
 
-set_english_language(driver)
+# set_english_language(driver)
 
-driver.get(PRIME_URL)
+# driver.get(PRIME_URL)
 
-sleep(5)
+# sleep(5)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_english_titles(driver, 'Amazon Prime Video')
+# get_english_titles(driver, 'Amazon Prime Video')
 
-set_spanish_language(driver)
+# set_spanish_language(driver)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_spanish_titles(driver)
+# get_spanish_titles(driver)
 
 # PARAMOUNT
 
-print('Paramount')
+# print('Paramount')
 
-set_english_language(driver)
+# set_english_language(driver)
 
-driver.get(PARAMOUNT)
+# driver.get(PARAMOUNT)
 
-sleep(5)
+# sleep(5)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_english_titles(driver, 'Paramount')
+# get_english_titles(driver, 'Paramount')
 
-set_spanish_language(driver)
+# set_spanish_language(driver)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_spanish_titles(driver)
+# get_spanish_titles(driver)
 
 # HBO
 
-print('HBO Max')
+# print('HBO Max')
 
-set_english_language(driver)
+# set_english_language(driver)
 
-driver.get(HBO_URL)
+# driver.get(HBO_URL)
 
-sleep(5)
+# sleep(5)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_english_titles(driver, 'HBO Max')
+# get_english_titles(driver, 'HBO Max')
 
-set_spanish_language(driver)
+# set_spanish_language(driver)
 
-get_to_the_end(driver)
+# get_to_the_end(driver)
 
-get_spanish_titles(driver)
+# get_spanish_titles(driver)
 
 # while True:
 #     prev_heigh = driver.execute_script('return document.body.scrollHeight')
@@ -423,6 +425,7 @@ for key in movies:
         'title_two': key,
         'title_three': movies[key]['spanish_title_one'],
         'title_four': movies[key]['spanish_title_two'],
+        'poster': movies[key]['poster'],
         'streaming': movies[key]['streaming']
     })
 
