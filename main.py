@@ -23,6 +23,8 @@ PRIME_URL = 'https://www.justwatch.com/pe/proveedor/amazon-prime-video?monetizat
 PARAMOUNT = 'https://www.justwatch.com/pe/proveedor/paramount-plus?monetization_types=flatrate&sort_by=title'
 HBO_URL = 'https://www.justwatch.com/pe/proveedor/hbo-max?monetization_types=flatrate&sort_by=title'
 
+urls = [NETFLIX_URL, DISNEY_URL, PRIME_URL, PARAMOUNT, HBO_URL]
+
 driver.get(JUSTWATCH_URL)
 driver.maximize_window()
 
@@ -34,7 +36,7 @@ def normalize_string(s):
     s = normalize( 'NFC', s)
     return s
 
-def get_english_titles(driver):
+def get_english_titles(driver, streaming):
 
     all_titles = driver.find_elements(By.XPATH,value='//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div')
     item_number = 1
@@ -46,10 +48,10 @@ def get_english_titles(driver):
             title_element= driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
             title = normalize_string(title_element.get_attribute('href').split('/')[-1].replace('-', ' '))
             if movies.get(title):
-                movies[title]['streaming'].append('netflix')
+                movies[title]['streaming'].append(streaming)
             else:
                 print(f'Adding {title} and {original_title}')
-                movies[title] = {'streaming': ['netflix'], 'original_title': original_title, 'spanish_title_one': '#', 'spanish_title_two': '#'}
+                movies[title] = {'streaming': [streaming], 'original_title': original_title, 'spanish_title_one': '#', 'spanish_title_two': '#'}
         except:
             print('error')
         item_number += 1
@@ -65,9 +67,11 @@ def get_spanish_titles(driver):
             spanish_title_one = normalize_string(title_element.get_attribute('data-src').split('/')[-1].replace('-', ' '))
             spanish_title_two = normalize_string(title_element.get_attribute('alt'))
             if movies.get(spanish_title_one):
+                print('adding', spanish_title_one)
                 movies[spanish_title_one]['spanish_title_one'] = spanish_title_one
                 movies[spanish_title_one]['spanish_title_two'] = spanish_title_two
             elif movies.get(spanish_title_two):
+                print('adding', spanish_title_two)
                 movies[spanish_title_two]['spanish_title_one'] = spanish_title_one
                 movies[spanish_title_two]['spanish_title_two'] = spanish_title_two
         except:
@@ -78,43 +82,43 @@ def set_english_language(driver):
     login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
     login.click()
 
-    sleep(3)
+    sleep(10)
 
     langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
     langauge_button.click()
 
-    sleep(5)
+    sleep(10)
 
     english_us_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[12]')
     driver.execute_script("arguments[0].click();", english_us_button)
 
-    sleep(5)
+    sleep(10)
 
     close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
     close_button.click()
 
-    sleep(5)
+    sleep(10)
 
 def set_spanish_language(driver):
     login = driver.find_element(By.XPATH, value='//*[@id="app"]/div[3]/div/div[2]/div[2]/div[1]/div/button/div/span')
     login.click()
 
-    sleep(5)
+    sleep(10)
 
     langauge_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div[2]/button[2]')
     langauge_button.click()
 
-    sleep(5)
+    sleep(10)
 
     spanish_latin_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-content/div/div/div/div[15]')
     driver.execute_script("arguments[0].click();", spanish_latin_button)
 
-    sleep(5)
+    sleep(10)
 
     close_button = driver.find_element(By.XPATH, value='/html/body/ion-modal/div[2]/div/ion-header/ion-toolbar/ion-buttons[2]/ion-button')
     close_button.click()
         
-    sleep(5)
+    sleep(10)
 
 
 def get_to_the_end(driver):
@@ -127,6 +131,7 @@ def get_to_the_end(driver):
             print('breaking')
             break
 
+print('Netflix')
 
 set_english_language(driver)
 
@@ -136,7 +141,7 @@ sleep(5)
 
 get_to_the_end(driver)
 
-get_english_titles(driver)
+get_english_titles(driver, 'Netflix')
 
 set_spanish_language(driver)
 
@@ -146,6 +151,8 @@ get_spanish_titles(driver)
 
 # DISNEY
 
+print('Disney+')
+
 set_english_language(driver)
 
 driver.get(DISNEY_URL)
@@ -154,7 +161,7 @@ sleep(5)
 
 get_to_the_end(driver)
 
-get_english_titles(driver)
+get_english_titles(driver, 'Disney+')
 
 set_spanish_language(driver)
 
@@ -164,6 +171,8 @@ get_spanish_titles(driver)
 
 # PRIME
 
+print('Amazon Prime')
+
 set_english_language(driver)
 
 driver.get(PRIME_URL)
@@ -172,7 +181,7 @@ sleep(5)
 
 get_to_the_end(driver)
 
-get_english_titles(driver)
+get_english_titles(driver, 'Amazon Prime Video')
 
 set_spanish_language(driver)
 
@@ -182,6 +191,8 @@ get_spanish_titles(driver)
 
 # PARAMOUNT
 
+print('Paramount')
+
 set_english_language(driver)
 
 driver.get(PARAMOUNT)
@@ -190,7 +201,7 @@ sleep(5)
 
 get_to_the_end(driver)
 
-get_english_titles(driver)
+get_english_titles(driver, 'Paramount')
 
 set_spanish_language(driver)
 
@@ -200,6 +211,8 @@ get_spanish_titles(driver)
 
 # HBO
 
+print('HBO Max')
+
 set_english_language(driver)
 
 driver.get(HBO_URL)
@@ -208,7 +221,7 @@ sleep(5)
 
 get_to_the_end(driver)
 
-get_english_titles(driver)
+get_english_titles(driver, 'HBO Max')
 
 set_spanish_language(driver)
 
@@ -413,6 +426,6 @@ for key in movies:
         'streaming': movies[key]['streaming']
     })
 
-with open("sample.json", "w") as file:
+with open("movies.json", "w") as file:
     json.dump(data, file, indent=4)
 
