@@ -6,10 +6,12 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 from chrome_options import ChromeOptions
 from time import sleep
-import pandas as pd
 import json
 import re
 from unicodedata import normalize
+import base64
+import io
+from PIL import Image
 
 spanish_titles = []
 movies = {}
@@ -45,8 +47,7 @@ def get_english_titles(driver, streaming):
         try:
             original_title_element = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/img')
             original_title = normalize_string(original_title_element.get_attribute('alt'))
-            poster = original_title_element.get_attribute('src')
-            print('poster', poster)
+            poster = driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a/div/picture/source[2]').get_attribute('srcset')
             title_element= driver.find_element(By.XPATH, value=f'//*[@id="base"]/div[3]/div/div[2]/div/div[1]/div/div[{item_number}]/a')
             title = normalize_string(title_element.get_attribute('href').split('/')[-1].replace('-', ' '))
             if movies.get(title):
