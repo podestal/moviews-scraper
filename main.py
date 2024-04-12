@@ -10,6 +10,8 @@ import json
 import re
 from unicodedata import normalize
 
+# this is a new comment
+
 spanish_titles = []
 movies = {}
 chrome_options = ChromeOptions()
